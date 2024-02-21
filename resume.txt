@@ -1,0 +1,2 @@
+- 01:50 Pengenalan Eloquent
+- 07:00 Buat Project
