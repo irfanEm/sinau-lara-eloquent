@@ -1,2 +1,8 @@
 - 01:50 Pengenalan Eloquent
 - 07:00 Buat Project
+- 08:20 Buat Database
+- 11:20 Model
+    - php artisan make:model NamaModel
+- 25:20 Insert
+    - save();
+- 29:45 Query Builder
