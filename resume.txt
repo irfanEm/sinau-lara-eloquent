@@ -6,3 +6,7 @@
 - 25:20 Insert
     - save();
 - 29:45 Query Builder
+    - static method query();
+    - ex : User::query();
+- 32:27 Insert Many
+- 39:10 Find
