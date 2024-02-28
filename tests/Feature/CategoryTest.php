@@ -78,7 +78,64 @@ class CategoryTest extends TestCase
         $hasil = Category::whereNull("description")->get();
         self::assertCount(5, $hasil);
         $hasil -> each(function($sql) {
+            $sql->description = "Di Update";
+            $sql->update();
             Log::info(json_encode($sql));
         });
+    }
+
+    public function testUpdateMany()
+    {
+        $categories = [];
+        for($i = 1; $i <= 10; $i++){
+            $categories[] = [
+                "id" => "ID $i",
+                "name" => "NAME $i"
+            ];
+        }
+
+        $hasil = Category::insert($categories);
+        self::assertTrue($hasil);
+
+        Category::whereNull("description")->update([
+            "description" => "Di Update"
+        ]);
+
+        $total = Category::where("description", "!=", "null")->count();
+        self::assertEquals(10, $total);
+    }
+
+    public function testDelete()
+    {
+        $this->seed(CategorySeeder::class);
+
+        $category = Category::find("MAKANAN");
+        $hasil = $category->delete();
+        self::assertTrue($hasil);
+
+        $category = Category::count();
+        self::assertEquals(0, $category);
+    }
+
+    public function testDeleteMany()
+    {
+        $categories = [];
+        for($i = 1; $i <= 10; $i++){
+            $categories[] = [
+                "id" => "ID $i",
+                "name" => "NAME $i"
+            ];
+        }
+
+        $hasil = Category::insert($categories);
+        self::assertTrue($hasil);
+
+        $total = Category::count();
+        self::assertEquals(10, $total);
+
+        Category::whereNull("description")->delete();
+
+        $total = Category::count();
+        self::assertEquals(0, $total);
     }
 }

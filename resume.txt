@@ -15,4 +15,9 @@
     - update() / save().
     - atau gunakan new dengan atribut $exists set ke true.
 - 47:50 Select
-    -
+- 52:55 Update Many
+- 56:35 Delete
+    - delete().
+    - gunakan find sebelum delete.
+- 58:45 Delete Many
+- 01:01:10 UUID
