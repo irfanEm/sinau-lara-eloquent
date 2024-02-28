@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Category;
+use Illuminate\Support\Facades\Log;
+use Database\Seeders\CategorySeeder;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoryTest extends TestCase
 {
@@ -34,5 +36,49 @@ class CategoryTest extends TestCase
 
         $data = Category::count();
         self::assertEquals(10, $data);
+    }
+
+    public function testFind()
+    {
+        $this->seed(CategorySeeder::class);
+
+        $hasil = Category::find("MAKANAN");
+
+        self::assertNotNull($hasil);
+        self::assertEquals("MAKANAN", $hasil->id);
+        self::assertEquals("MAKANAN", $hasil->name);
+        self::assertEquals("Aneka Makanan", $hasil->description);
+    }
+
+    public function testUpdate()
+    {
+        $this->seed(CategorySeeder::class);
+
+        $category = Category::find("MAKANAN");
+        $category->name = "BADOGAN";
+
+        $hasil = $category->update();
+
+        self::assertTrue($hasil);
+        self::assertNotNull($category);
+        self::assertEquals("BADOGAN", $category->name);
+    }
+
+    public function testSelect()
+    {
+        for($i = 1; $i <= 5; $i++)
+        {
+            $category = new Category();
+            $category->id = "ID $i";
+            $category->name = "NAME $i";
+
+            $category->save();
+        }
+
+        $hasil = Category::whereNull("description")->get();
+        self::assertCount(5, $hasil);
+        $hasil -> each(function($sql) {
+            Log::info(json_encode($sql));
+        });
     }
 }

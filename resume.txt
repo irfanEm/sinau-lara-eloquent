@@ -10,3 +10,9 @@
     - ex : User::query();
 - 32:27 Insert Many
 - 39:10 Find
+    - find() : menemukan satu data dengan primary key.
+- 43:30 Update
+    - update() / save().
+    - atau gunakan new dengan atribut $exists set ke true.
+- 47:50 Select
+    -
