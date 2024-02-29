@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Category;
+use App\Models\Scopes\IsActiveScope;
 use Illuminate\Support\Facades\Log;
 use Database\Seeders\CategorySeeder;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -137,5 +138,71 @@ class CategoryTest extends TestCase
 
         $total = Category::count();
         self::assertEquals(0, $total);
+    }
+
+    public function testFillable()
+    {
+        $request = [
+            "id" => "BADOGAN",
+            "name" => "BADOGAN",
+            "description" => "Aneka Makanan"
+        ];
+
+        $category = new Category($request);
+        $category->save();
+
+        self::assertNotNull($category->id);
+        self::assertNotNull($category->name);
+        self::assertNotNull($category->description);
+    }
+
+    public function testCreateMethod()
+    {
+        $request = [
+            "id" => "BADOGAN",
+            "name" => "BADOGAN",
+            "description" => "Aneka Makanan"
+        ];
+
+        $category = Category::create($request);
+
+        self::assertNotNull($category->id);
+        self::assertNotNull($category->name);
+        self::assertNotNull($category->description);
+    }
+
+    public function testFillMethod()
+    {
+        $this->seed(CategorySeeder::class);
+
+        $request = [
+            "name" => "PERBADOGAN",
+            "description" => "Aneka Perbadogan Duniawi"
+        ];
+
+        $category = Category::find("MAKANAN");
+        $category->fill($request);
+        $category->save();
+
+        $hasil = Category::find("MAKANAN");
+        self::assertEquals("PERBADOGAN", $hasil->name);
+        self::assertEquals("Aneka Perbadogan Duniawi", $hasil->description);
+    }
+
+    public function testGlobalScope()
+    {
+        $category = new Category();
+        $category->id = "MKNN";
+        $category->name = "MAKANAN";
+        $category->description = "Aneka Makanan";
+        $category->is_active = false;
+        $simpan = $category->save();
+        self::assertTrue($simpan);
+
+        $hasil = Category::find("MKNN");
+        self::assertNull($hasil);
+
+        $hasil = Category::withoutGlobalScopes([IsActiveScope::class])->find("MKNN");
+        self::assertNotNull($hasil);
     }
 }

@@ -21,3 +21,24 @@
     - gunakan find sebelum delete.
 - 58:45 Delete Many
 - 01:01:10 UUID
+    - UUID selain primary key -> override methods uniqueIds() pada trait HasUuids.
+- 01:12:30 Timestamps
+- 01:21:55 Default Attribute Values
+    - $attibutes = []
+- 01:25:55 Fillable Attributes
+    - $fillable = []
+- 01:35:00 Update Model
+    - fill()
+- 01:37:55 Soft Delete
+    - delete() : melakukan soft delete.
+    - forceDelete() : menghapus / delete data dari table secara permanen.
+    - withTrashed() : Mengambil semua data termasuk yang sudah di softDelete.
+- 01:51:00 Query Scope 
+    - Global Scope
+    - Local Scope
+- 01:52:05 Query Global Scope
+    - php artisan make:scope NamaScope
+    - override method booted()
+    - gunakan method addGlobalScope()
+    - withoutGlobalScopes([]) : untuk mematikan globalscope yang dibuat.
+- 02:03:40 Query Local Scope
