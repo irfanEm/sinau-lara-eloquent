@@ -33,7 +33,7 @@
     - delete() : melakukan soft delete.
     - forceDelete() : menghapus / delete data dari table secara permanen.
     - withTrashed() : Mengambil semua data termasuk yang sudah di softDelete.
-- 01:51:00 Query Scope 
+- 01:51:00 Query Scope
     - Global Scope
     - Local Scope
 - 01:52:05 Query Global Scope
@@ -42,3 +42,10 @@
     - gunakan method addGlobalScope()
     - withoutGlobalScopes([]) : untuk mematikan globalscope yang dibuat.
 - 02:03:40 Query Local Scope
+    - tambahkan methid di model dengan prefix scopeNamaMethod()
+    - untuk menggunakan local scope panggil methodnya tanpa prefix scope dan dengan diawali lowecase.
+- 02:11:55 Relationships
+    - 02:13:10 One to One
+        - hasOne()
+        - belongsTo() pada model sebaliknya jika ingin relasi bidirectional antar model.
+    - 02:30:25 On to Many

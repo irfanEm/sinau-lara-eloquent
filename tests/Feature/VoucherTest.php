@@ -14,7 +14,7 @@ class VoucherTest extends TestCase
     public function testUUID()
     {
         $voucher = $this->seed(VoucherSeeder::class);
-        
+
         self::assertNotNull($voucher);
     }
 
@@ -40,5 +40,19 @@ class VoucherTest extends TestCase
 
         $voucher = Voucher::withTrashed()->where("name", "=", "Contoh Voucher")->first();
         self::assertNotNull($voucher);
+    }
+
+    public function testLocalScope()
+    {
+        $voucher = new Voucher();
+        $voucher->name = "Contoh Voucher";
+        $voucher->is_active = true;
+        $voucher->save();
+
+        $hasil = Voucher::active()->count();
+        self::assertEquals(1, $hasil);
+
+        $hasil = Voucher::nonActive()->count();
+        self::assertEquals(0, $hasil);
     }
 }
