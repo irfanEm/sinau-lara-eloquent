@@ -17,6 +17,7 @@ class CategorySeeder extends Seeder
         $category->id = "MAKANAN";
         $category->name = "MAKANAN";
         $category->description = "Aneka Makanan";
+        $category->is_active = true;
         $category->save();
     }
 }

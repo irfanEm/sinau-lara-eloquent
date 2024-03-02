@@ -48,4 +48,6 @@
     - 02:13:10 One to One
         - hasOne()
         - belongsTo() pada model sebaliknya jika ingin relasi bidirectional antar model.
-    - 02:30:25 On to Many
+    - 02:30:25 One to Many
+        - hasMany()
+        - belongsTo() sebagai bidirectionalnya.
