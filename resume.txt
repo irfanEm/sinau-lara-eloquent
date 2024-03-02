@@ -52,3 +52,4 @@
         - hasMany()
         - belongsTo() sebagai bidirectionalnya.
     - 02:43:40 Query Builder Pada Relationship.
+    - 02:54:15 Has One of Many.

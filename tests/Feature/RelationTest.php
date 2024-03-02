@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\Wallet;
 use Database\Seeders\WalletSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
@@ -52,5 +53,51 @@ class RelationTest extends TestCase
         $category = $products->category;
         self::assertNotNull($category);
         self::assertEquals("MAKANAN", $category->id);
+    }
+
+    public function testOneToOneQuery()
+    {
+        $customer = new Customer();
+        $customer->id = "BLQS";
+        $customer->name = "Balqis FA";
+        $customer->email = "balqis@email.com";
+        $customer->save();
+
+        $wallet = new Wallet();
+        $wallet->amount = 10000000;
+        $customer->wallet()->save($wallet);
+
+        self::assertNotNull($wallet->customer_id);
+        self::assertNotNull($customer);
+    }
+
+    public function testOneToManyQuery()
+    {
+        $category = new Category();
+        $category->id = "PLSA";
+        $category->name = "Pulsa";
+        $category->description = "Pulsa All Operator";
+        $category->is_active = true;
+        $category->save();
+
+        $product = new Product();
+        $product->id = "1";
+        $product->name = "Pulsa Telkomsel";
+        $category->products()->save($product);
+
+        self::assertNotNull($product->category_id);
+        self::assertEquals("PLSA", $product->category_id);
+    }
+
+    public function testRelationshipQuery()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find("MAKANAN");
+        $products = $category->products;
+        self::assertCount(1, $products);
+
+        $productHabis = $category->products()->where("stock", "<=", 0)->get();
+        self::assertCount(1, $productHabis);
     }
 }
