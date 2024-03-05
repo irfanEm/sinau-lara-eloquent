@@ -6,11 +6,14 @@ use Tests\TestCase;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\VirtualAccount;
 use App\Models\Wallet;
 use Database\Seeders\WalletSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ReviewSeeder;
+use Database\Seeders\VirtualAccountSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -99,5 +102,44 @@ class RelationTest extends TestCase
 
         $productHabis = $category->products()->where("stock", "<=", 0)->get();
         self::assertCount(1, $productHabis);
+    }
+
+    public function testRelationHasOfMany()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+        $category = Category::find("MAKANAN");
+
+        $productTermurah = $category->productTermurah;
+        self::assertNotNull($productTermurah);
+        self::assertEquals(0, $productTermurah->price);
+
+        $productTermahal = $category->productTermahal;
+        self::assertNotNull($productTermahal);
+        self::assertEquals(300, $productTermahal->price);
+
+    }
+
+    public function testHasOneThrough()
+    {
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, VirtualAccountSeeder::class]);
+
+        $customer = Customer::find("BLQS");
+        self::assertNotNull($customer);
+
+        $virtualAccount = $customer->virtualAccount;
+        self::assertNotNull($virtualAccount);
+        self::assertEquals("BCA", $virtualAccount->bank);
+    }
+
+    public function testHasManyThrought()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, CustomerSeeder::class, ReviewSeeder::class]);
+
+        $category = Category::find("MAKANAN");
+        self::assertNotNull($category);
+
+        $reviews = $category->reviews;
+        self::assertNotNull($reviews);
+        self::assertCount(2, $reviews);
     }
 }

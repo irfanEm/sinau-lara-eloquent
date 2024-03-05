@@ -53,4 +53,13 @@
         - belongsTo() sebagai bidirectionalnya.
     - 02:43:40 Query Builder Pada Relationship.
     - 02:54:15 Has One of Many.
-        - digunakan untuk mengambil salah satu data pada relasi one to many, seperti mengambil product termurah / termahal disebuah
+        - digunakan untuk mengambil salah satu data pada relasi one to many, seperti mengambil product termurah / termahal disebuah.
+    - 03:02:15 Has One Through.
+        - contoh customer punya satu wallet dan wallet punya satu virtual account.
+        - format : 
+        public function model3(): HasOneThrough
+        {
+            return $this->HasOneThrough(Model3::class, Model2::class, "ForeignKeyModel2", "ForeignKeyModel3", "PrimaryKeyModel1", "PrimaryKeyModel2");
+        }
+    - 03:15:35 Has Many Through
+    - 03:30:35 Many to Many
