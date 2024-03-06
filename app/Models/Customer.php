@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Like;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Customer extends Model
@@ -34,6 +36,16 @@ class Customer extends Model
 
     public function likeProducts(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id");
+        return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
+            ->withPivot("created_at")
+            ->using(Like::class);
+    }
+
+    public function likeProductsLastWeek()
+    {
+        return $this->belongsToMany(Product::class, "customers_likes_products", "customer_id", "product_id")
+            ->withPivot("created_at")
+            ->wherePivot("created_at", ">=", Date::now()->addDays(-7))
+            ->using(Like::class);
     }
 }

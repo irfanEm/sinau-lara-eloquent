@@ -68,3 +68,8 @@
         - attach() untuk melakukan insert.
         - detach() untuk melakukan delete ke table.
     - 03:44:50 Intermediate Table
+        - withPivot() digunakan untuk menyertakan kolom yang ingin ikut diquery, ditambahkan pada relasi BelongsToMany.
+        - wherePivot() digunakan untuk Filtering via intermediate Table
+    - 03:56:20  Pivot Model
+        - extends Class Pivot
+    - 04:08:40 Polymporphic Relationship
