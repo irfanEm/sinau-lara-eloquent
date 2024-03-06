@@ -142,4 +142,31 @@ class RelationTest extends TestCase
         self::assertNotNull($reviews);
         self::assertCount(2, $reviews);
     }
+
+    public function testManyToManyAttach()
+    {
+        $this->seed([CustomerSeeder::class, CategorySeeder::class, ProductSeeder::class]);
+
+        $customer = Customer::find("BLQS");
+        self::assertNotNull($customer);
+
+        $customer->likeProducts()->attach("1");
+
+        $product = $customer->likeProducts;
+        self::assertCount(1, $product);
+        self::assertEquals(1, $product[0]->id);
+    }
+
+    public function testManyToManyDetach()
+    {
+        $this->testManyToManyAttach();
+
+        $customer = Customer::find("BLQS");
+        $customer->likeProducts()->detach("1");
+
+        $product = $customer->likeProducts;
+        
+        self::assertNotNull($product);
+        self::assertCount(0, $product);
+    }
 }

@@ -63,3 +63,8 @@
         }
     - 03:15:35 Has Many Through
     - 03:30:35 Many to Many
+        - belongsToMany() pada kedua model.
+        - buat tabel jembatan
+        - attach() untuk melakukan insert.
+        - detach() untuk melakukan delete ke table.
+    - 03:44:50 Intermediate Table
