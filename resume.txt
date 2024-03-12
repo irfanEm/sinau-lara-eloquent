@@ -56,7 +56,7 @@
         - digunakan untuk mengambil salah satu data pada relasi one to many, seperti mengambil product termurah / termahal disebuah.
     - 03:02:15 Has One Through.
         - contoh customer punya satu wallet dan wallet punya satu virtual account.
-        - format : 
+        - format :
         public function model3(): HasOneThrough
         {
             return $this->HasOneThrough(Model3::class, Model2::class, "ForeignKeyModel2", "ForeignKeyModel3", "PrimaryKeyModel1", "PrimaryKeyModel2");
@@ -73,3 +73,5 @@
     - 03:56:20  Pivot Model
         - extends Class Pivot
     - 04:08:40 Polymporphic Relationship
+        - 04:10:35 One to One Polymporphic
+        - 04:25:05 One to Many Polymporphic

@@ -12,6 +12,7 @@ use Database\Seeders\WalletSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\CustomerSeeder;
+use Database\Seeders\ImageSeeder;
 use Database\Seeders\ReviewSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -165,7 +166,7 @@ class RelationTest extends TestCase
         $customer->likeProducts()->detach("1");
 
         $product = $customer->likeProducts;
-        
+
         self::assertNotNull($product);
         self::assertCount(0, $product);
     }
@@ -224,5 +225,29 @@ class RelationTest extends TestCase
             self::assertNotNull($pivot->product);
             self::assertNotNull($pivot->customer);
         }
+    }
+
+    public function testImages()
+    {
+        $this->seed([CustomerSeeder::class, ImageSeeder::class]);
+
+        $customer = Customer::find("BLQS");
+        self::assertNotNull($customer);
+
+        $image = $customer->image;
+        self::assertNotNull($image);
+        self::assertEquals("https://instagram.com/irfan.em/1.jpg", $image->url);
+    }
+
+    public function testProductMorph()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, ImageSeeder::class]);
+
+        $product = Product::find("1");
+        self::assertNotNull($product);
+
+        $image = $product->image;
+        self::assertNotNull($image);
+        self::assertEquals("https://instagram.com/irfan.em/2.jpg", $image->url);
     }
 }
