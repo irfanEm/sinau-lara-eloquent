@@ -11,10 +11,12 @@ use App\Models\Wallet;
 use Database\Seeders\WalletSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\CommentSeeder;
 use Database\Seeders\CustomerSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ReviewSeeder;
 use Database\Seeders\VirtualAccountSeeder;
+use Database\Seeders\VoucherSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -249,5 +251,19 @@ class RelationTest extends TestCase
         $image = $product->image;
         self::assertNotNull($image);
         self::assertEquals("https://instagram.com/irfan.em/2.jpg", $image->url);
+    }
+
+    public function testOneToManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, CommentSeeder::class]);
+
+        $product = Product::first();
+        self::assertNotNull($product);
+
+        $comments = $product->comments;
+        foreach($comments as $comment){
+            self::assertEquals($product->id, $comment->commentable_id);
+            self::assertEquals(Product::class, $comment->commentable_type);
+        }
     }
 }
