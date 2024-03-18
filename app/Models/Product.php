@@ -45,4 +45,14 @@ class Product extends Model
     {
         return $this->morphMany(Comment::class, "commentable");
     }
+
+    public function komentTerbaru(): MorphOne
+    {
+        return $this->morphOne(Comment::class, "commentable")->latest("created_at");
+    }
+
+    public function komentTerlama(): MorphOne
+    {
+        return $this->morphOne(Comment::class, "commentable")->oldest("created_at");
+    }
 }

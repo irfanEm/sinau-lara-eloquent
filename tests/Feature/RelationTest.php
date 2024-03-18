@@ -266,4 +266,18 @@ class RelationTest extends TestCase
             self::assertEquals(Product::class, $comment->commentable_type);
         }
     }
+
+    public function testOneOfManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, CommentSeeder::class]);
+
+        $product = Product::find("1");
+        self::assertNotNull($product);
+
+        $comment = $product->komentTerbaru;
+        self::assertNotNull($comment);
+
+        $commentLama = $product->komentTerlama;
+        self::assertNotNull($commentLama);
+    }
 }
