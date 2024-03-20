@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tag;
+use App\Models\Product;
+use App\Models\Voucher;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TagSeeder extends Seeder
 {
@@ -12,6 +15,15 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $tag = new Tag();
+        $tag->id = "blqs";
+        $tag->name = "Balqis Farah Anabila";
+        $tag->save();
+
+        $product = Product::first();
+        $product->tags()->attach($tag);
+
+        $voucher = Voucher::first();
+        $voucher->tags()->attach($tag);
     }
 }
