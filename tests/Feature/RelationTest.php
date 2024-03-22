@@ -15,6 +15,7 @@ use Database\Seeders\CommentSeeder;
 use Database\Seeders\CustomerSeeder;
 use Database\Seeders\ImageSeeder;
 use Database\Seeders\ReviewSeeder;
+use Database\Seeders\TagSeeder;
 use Database\Seeders\VirtualAccountSeeder;
 use Database\Seeders\VoucherSeeder;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -279,5 +280,26 @@ class RelationTest extends TestCase
 
         $commentLama = $product->komentTerlama;
         self::assertNotNull($commentLama);
+    }
+
+    public function testManyToManyPolymorphic()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class, VoucherSeeder::class, TagSeeder::class]);
+
+        $product = Product::find("1");
+        $tags = $product->tags;
+        self::assertNotNull($tags);
+        self::assertCount(1, $tags);
+
+        foreach($tags as $tag)
+        {
+            self::assertNotNull($tag);
+            self::assertNotNull($tag->id);
+            self::assertNotNull($tag->name);
+
+            $vouchers = $tag->vouchers;
+            self::assertNotNull($vouchers);
+            self::assertCount(1, $vouchers);
+        }
     }
 }

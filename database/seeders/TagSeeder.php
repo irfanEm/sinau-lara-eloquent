@@ -20,7 +20,7 @@ class TagSeeder extends Seeder
         $tag->name = "Balqis Farah Anabila";
         $tag->save();
 
-        $product = Product::first();
+        $product = Product::find("1");
         $product->tags()->attach($tag);
 
         $voucher = Voucher::first();
