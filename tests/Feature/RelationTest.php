@@ -301,5 +301,56 @@ class RelationTest extends TestCase
             self::assertNotNull($vouchers);
             self::assertCount(1, $vouchers);
         }
+
+    }
+    public function testEagerLoadingQuery()
+    {
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, ImageSeeder::class]);
+        $customer = Customer::with(['wallet', 'image'])->find("BLQS");
+        self::assertNotNull($customer);
+    }
+
+    public function testEagerLoadingModel()
+    {
+        $this->seed([CustomerSeeder::class, WalletSeeder::class, ImageSeeder::class]);
+        $customer = Customer::find("BLQS");
+        self::assertNotNull($customer);
+    }
+
+    public function testQueryingBuilder()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find("MAKANAN");
+        $product = $category->products()->where("price", "=", "300")->get();
+
+        self::assertNotNull($product);
+        self::assertEquals("2", $product[0]->id);
+    }
+
+    public function testAggregatingRelations()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $category = Category::find("MAKANAN");
+        $total = $category->products()->where("price", "300")->count();
+
+        self::assertEquals("1", $total);
+
+        $total = $category->products()->count();
+
+        self::assertEquals("2", $total);
+    }
+
+    public function testEloquentCollectionToQuery()
+    {
+        $this->seed([CategorySeeder::class, ProductSeeder::class]);
+
+        $product = Product::get();
+        self::assertNotNull($product);
+
+        $product = $product->toQuery()->where("price", "300")->get();
+        self::assertNotNull($product);
+        self::assertEquals("2", $product[0]->id);
     }
 }

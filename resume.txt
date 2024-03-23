@@ -79,5 +79,9 @@
         - 04:39:20 Many to Many Polymporphic
         - 04:52:35 Polymporphic Types
             -Relation::enforceMorphMap()
-        - 04:58:10 Lazy and Eager Loading
-        -
+    - 04:58:10 Lazy and Eager Loading
+    - 05:04:45 Querying Relations
+    - 05:08:55 Aggregating Relations
+    - 05:11:00 Eloquent Collection
+        - https://laravel.com/docs/10.x/eloquent-collections#available-methods
+    - 05:16:50 Accessors & Mutators
