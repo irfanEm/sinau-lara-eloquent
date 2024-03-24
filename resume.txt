@@ -85,3 +85,10 @@
     - 05:11:00 Eloquent Collection
         - https://laravel.com/docs/10.x/eloquent-collections#available-methods
     - 05:16:50 Accessors & Mutators
+    - 05:31:00 Attribute Casting
+    - 05:35:45 Custome Casts
+        php artisan make:cast NamaCasts
+    - 05:46:40 Serialization
+    - 05:55:45 Factory
+        php artisan make:factory NamaFactory
+    - 06:09:30 Memperbaiki Unit Test
