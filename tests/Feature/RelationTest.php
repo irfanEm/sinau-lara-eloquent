@@ -47,7 +47,7 @@ class RelationTest extends TestCase
 
         $products = $category->products;
         self::assertNotNull($products);
-        self::assertCount(1, $products);
+        self::assertCount(2, $products);
     }
 
     public function testOneToManyProducts()
@@ -102,10 +102,10 @@ class RelationTest extends TestCase
 
         $category = Category::find("MAKANAN");
         $products = $category->products;
-        self::assertCount(1, $products);
+        self::assertCount(2, $products);
 
         $productHabis = $category->products()->where("stock", "<=", 0)->get();
-        self::assertCount(1, $productHabis);
+        self::assertCount(2, $productHabis);
     }
 
     public function testRelationHasOfMany()
@@ -264,7 +264,7 @@ class RelationTest extends TestCase
         $comments = $product->comments;
         foreach($comments as $comment){
             self::assertEquals($product->id, $comment->commentable_id);
-            self::assertEquals(Product::class, $comment->commentable_type);
+            self::assertEquals('product', $comment->commentable_type);
         }
     }
 

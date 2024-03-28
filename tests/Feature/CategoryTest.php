@@ -28,7 +28,8 @@ class CategoryTest extends TestCase
         for($i = 1; $i <= 10; $i++){
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "NAME $i"
+                "name" => "NAME $i",
+                "is_active" => true
             ];
         }
 
@@ -72,6 +73,7 @@ class CategoryTest extends TestCase
             $category = new Category();
             $category->id = "ID $i";
             $category->name = "NAME $i";
+            $category->is_active = true;
 
             $category->save();
         }
@@ -91,7 +93,8 @@ class CategoryTest extends TestCase
         for($i = 1; $i <= 10; $i++){
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "NAME $i"
+                "name" => "NAME $i",
+                "is_active" => true
             ];
         }
 
@@ -124,7 +127,8 @@ class CategoryTest extends TestCase
         for($i = 1; $i <= 10; $i++){
             $categories[] = [
                 "id" => "ID $i",
-                "name" => "NAME $i"
+                "name" => "NAME $i", 
+                "is_active" => true
             ];
         }
 
